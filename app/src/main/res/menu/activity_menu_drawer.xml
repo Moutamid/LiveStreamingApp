@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <!--<item
+            android:id="@+id/item2"
+            android:icon="@drawable/ic_baseline_person_outline_24"
+            android:title="My Account"/>-->
+        <item
+            android:id="@+id/item3"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="Player Settings"/>
+        <item
+            android:id="@+id/item1"
+            android:icon="@drawable/ic_baseline_tv_24"
+            android:title="More Streaming Apps"/>
+        <item
+            android:id="@+id/item4"
+            android:icon="@drawable/ic_baseline_help_outline_24"
+            android:title="Help"/>
+        <item
+            android:id="@+id/item5"
+            android:icon="@drawable/ic_baseline_feedback_24"
+            android:title="Feedback"/>
+        <item
+            android:id="@+id/item7"
+            android:icon="@drawable/ic_baseline_star_rate_24"
+            android:title="Rate Us !"/>
+        <item
+            android:id="@+id/item6"
+            android:icon="@drawable/ic_baseline_report_24"
+            android:title="Reports"/>
+    </group>
+
+</menu>

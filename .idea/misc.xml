@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_brightness_6_24.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/ic_baseline_brightness_7_24.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/ic_baseline_stop_24.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_vedio.xml" value="0.11" />
+        <entry key="app/src/main/res/layout/fragment_channel_.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_radio_.xml" value="0.115625" />
+        <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/row_channels.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/row_radio.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/swipe_layout.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/menu/activity_menu_drawer.xml" value="0.25677083333333334" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
