@@ -1,9 +1,18 @@
 package com.moutamid.livestreamingapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.media.AudioManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.RemoteException;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -22,8 +31,10 @@ public class VedioActivity extends AppCompatActivity {
 
     ImageView dec_brightness , inc_brightness;
     ImageView dec_sound , inc_sound;
-    ImageView favroties , cast;
-    ImageView radio_iv , stop;
+    ImageView cast;
+    ImageView stop;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +47,7 @@ public class VedioActivity extends AppCompatActivity {
         inc_brightness = findViewById(R.id.inc_brightness);
         dec_sound = findViewById(R.id.dec_sound);
         inc_sound = findViewById(R.id.inc_sound);
-        favroties = findViewById(R.id.favroties);
         cast = findViewById(R.id.cast);
-        radio_iv = findViewById(R.id.radio_iv);
         stop = findViewById(R.id.stop);
 
         Bundle bundle = getIntent().getExtras();
@@ -46,6 +55,7 @@ public class VedioActivity extends AppCompatActivity {
             link.setText(bundle.getString("link"));
             name.setText(bundle.getString("name"));
         }
+
 
         String link_text = link.getText().toString().trim();
         String name_text = name.getText().toString().trim();
@@ -55,38 +65,41 @@ public class VedioActivity extends AppCompatActivity {
 
         webPlayerStd.setUp(link_text , name_text);
 
+        AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+
+        if(!Settings.System.canWrite(this)){
+            Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+            intent.setData(Uri.parse("package:" + this.getPackageName()));
+            startActivity(intent);
+        }
+
         dec_brightness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(VedioActivity.this, "Decrease Brightness", Toast.LENGTH_SHORT).show();
+                ContentResolver contentResolver = getApplicationContext().getContentResolver();
+                Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, 100);
             }
         });
 
         inc_brightness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(VedioActivity.this, "Increase Brightness", Toast.LENGTH_SHORT).show();
+                ContentResolver contentResolver = getApplicationContext().getContentResolver();
+                Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, 225);
             }
         });
 
         dec_sound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(VedioActivity.this, "Decrease Sound", Toast.LENGTH_SHORT).show();
+                audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
             }
         });
 
         inc_sound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(VedioActivity.this, "Increase Sound", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        favroties.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(VedioActivity.this, "Favroities", Toast.LENGTH_SHORT).show();
+                audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
             }
         });
 
@@ -97,16 +110,11 @@ public class VedioActivity extends AppCompatActivity {
             }
         });
 
-        radio_iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(VedioActivity.this, "Radio", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(VedioActivity.this , MainActivity.class);
+                startActivity(intent);
                 Toast.makeText(VedioActivity.this, "Stop", Toast.LENGTH_SHORT).show();
             }
         });

@@ -5,8 +5,11 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_baseline_brightness_6_24.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/ic_baseline_brightness_7_24.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/ic_baseline_stop_24.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/activity_favorities.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_music.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_vedio.xml" value="0.11" />
@@ -14,6 +17,7 @@
         <entry key="app/src/main/res/layout/fragment_radio_.xml" value="0.115625" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/row_channels.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/row_fav.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/row_radio.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/swipe_layout.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/menu/activity_menu_drawer.xml" value="0.25677083333333334" />

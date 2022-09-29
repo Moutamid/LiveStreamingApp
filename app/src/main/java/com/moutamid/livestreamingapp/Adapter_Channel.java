@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.fxn.stash.Stash;
 
 import java.util.ArrayList;
 
@@ -27,6 +30,7 @@ public class Adapter_Channel extends RecyclerView.Adapter<Adapter_Channel.Holder
     @NonNull
     @Override
     public HolderAndroid onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Stash.init(context);
         View view = LayoutInflater.from(context).inflate(R.layout.row_channels, parent, false);
         return new HolderAndroid(view);
     }
@@ -60,6 +64,16 @@ public class Adapter_Channel extends RecyclerView.Adapter<Adapter_Channel.Holder
                 context.startActivity(intent);
             }
         });
+
+        holder.btn_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ArrayList<Model_Channel> our_arraylist = Stash.getArrayList("name_of_arraylist" , Model_Channel.class);
+                our_arraylist.add(modelAndroid);
+                Stash.put("name_of_arraylist" , our_arraylist);
+                Toast.makeText(context, "Added to Favorities", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -70,6 +84,7 @@ public class Adapter_Channel extends RecyclerView.Adapter<Adapter_Channel.Holder
     class HolderAndroid extends RecyclerView.ViewHolder {
 
         private ImageView image1 ;
+        private ImageView btn_fav ;
         private TextView name , des , cast , time , link;
         private CardView card_channel;
 
@@ -77,6 +92,7 @@ public class Adapter_Channel extends RecyclerView.Adapter<Adapter_Channel.Holder
             super(itemView);
 
             image1 = itemView.findViewById(R.id.channel_img);
+            btn_fav = itemView.findViewById(R.id.btn_fav);
             name = itemView.findViewById(R.id.title_channel);
             des = itemView.findViewById(R.id.description_channel);
             cast = itemView.findViewById(R.id.cast_channel);

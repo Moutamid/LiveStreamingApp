@@ -107,11 +107,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(browserIntent);
         }
         else
-        /*if(id==R.id.item2){
-            Intent intent = new Intent(MainActivity.this , Profile_Activity.class);
+        if(id==R.id.item2){
+            Intent intent = new Intent(MainActivity.this , Favorities.class);
             startActivity(intent);
         }
-        else*/
+        else
         if(id==R.id.item3){
             Intent intent = new Intent(MainActivity.this , Settings_Activity.class);
             startActivity(intent);

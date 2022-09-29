@@ -16,6 +16,10 @@
             android:icon="@drawable/ic_baseline_tv_24"
             android:title="More Streaming Apps"/>
         <item
+            android:id="@+id/item2"
+            android:icon="@drawable/ic_baseline_favorite_border_24"
+            android:title="Favorities"/>
+        <item
             android:id="@+id/item4"
             android:icon="@drawable/ic_baseline_help_outline_24"
             android:title="Help"/>

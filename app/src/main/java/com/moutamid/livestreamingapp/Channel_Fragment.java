@@ -426,7 +426,7 @@ public class Channel_Fragment extends Fragment {
             Model_Channel modelAndroid = new Model_Channel(
                     channel_name[i],
                     channel_des[i],
-                    channel_cast[i],
+                    channel_cast[i],//SAVE KAHAN KAR RHY ?
                     channel_time[i],
                     channel_link[i],
                     images1_channel[i]

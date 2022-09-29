@@ -106,6 +106,19 @@
                                 android:textColor="@color/white"
                                 android:textSize="12sp"/>
 
+                            <ImageView
+                                android:id="@+id/btn_fav"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_below="@+id/notification_layout"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/shape_appclr2"
+                                android:src="@drawable/ic_baseline_favorite_border_24" />
+
                         </LinearLayout>
 
                         <TextView
@@ -124,7 +137,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

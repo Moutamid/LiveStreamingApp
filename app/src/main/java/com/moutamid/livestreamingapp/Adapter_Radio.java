@@ -54,13 +54,13 @@ public class Adapter_Radio extends RecyclerView.Adapter<Adapter_Radio.HolderAndr
         holder.card_channel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show();
-                /*String linkText = holder.link.getText().toString().trim();
+                //Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show();
+                String linkText = holder.link.getText().toString().trim();
                 String nameText = holder.name.getText().toString().trim();
-                Intent intent = new Intent(context , VedioActivity.class);
+                Intent intent = new Intent(context , MusicActivity.class);
                 intent.putExtra("link" , linkText);
                 intent.putExtra("name" , nameText);
-                context.startActivity(intent);*/
+                context.startActivity(intent);
             }
         });
     }
