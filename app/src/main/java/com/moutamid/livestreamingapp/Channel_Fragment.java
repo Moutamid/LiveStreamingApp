@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fxn.stash.Stash;
+
 import java.util.ArrayList;
 
 public class Channel_Fragment extends Fragment {
@@ -426,10 +428,11 @@ public class Channel_Fragment extends Fragment {
             Model_Channel modelAndroid = new Model_Channel(
                     channel_name[i],
                     channel_des[i],
-                    channel_cast[i],//SAVE KAHAN KAR RHY ?
+                    channel_cast[i],
                     channel_time[i],
                     channel_link[i],
-                    images1_channel[i]
+                    images1_channel[i],
+                    false
             );
             modelChannelArrayList.add(modelAndroid);
         }

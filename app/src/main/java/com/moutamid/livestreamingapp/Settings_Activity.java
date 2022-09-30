@@ -1,10 +1,12 @@
 package com.moutamid.livestreamingapp;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import java.util.Calendar;
 public class Settings_Activity extends AppCompatActivity {
 
     TextView text1 , text2 , text3 , text4 , text5 , text6;
+    TextView btn_update;
     Spinner test_spinner1 , test_spinner2 , test_spinner3 , test_spinner4 ,test_spinner6;
 
     String[] listItems1;
@@ -22,6 +25,23 @@ public class Settings_Activity extends AppCompatActivity {
     String[] listItems3;
     String[] listItems4;
     String[] listItems6;
+
+    public static final String SHARED_PREFS = "sharedPrefs";
+
+    public static final String TEXT1_1 = "text1_1";
+    private String text1_1;
+
+    public static final String TEXT1_2 = "text1_2";
+    private String text1_2;
+
+    public static final String TEXT1_3 = "text1_3";
+    private String text1_3;
+
+    public static final String TEXT1_4 = "text1_4";
+    private String text1_4;
+
+    public static final String TEXT1_6 = "text1_6";
+    private String text1_6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +54,7 @@ public class Settings_Activity extends AppCompatActivity {
         text4 = findViewById(R.id.text4);
         text5 = findViewById(R.id.text5);
         text6 = findViewById(R.id.text6);
+        btn_update = findViewById(R.id.btn_update);
 
         test_spinner1 = findViewById(R.id.test_spinner1);
         test_spinner2 = findViewById(R.id.test_spinner2);
@@ -41,8 +62,19 @@ public class Settings_Activity extends AppCompatActivity {
         test_spinner4 = findViewById(R.id.test_spinner4);
         test_spinner6 = findViewById(R.id.test_spinner6);
 
+        loadData();
+        updateData();
+
         String myCurrent_dateTime = SimpleDateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
         text5.setText(myCurrent_dateTime);
+
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveData();
+                Toast.makeText(Settings_Activity.this, "Saved Cahnges", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         text1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,5 +222,34 @@ public class Settings_Activity extends AppCompatActivity {
                 mDialog.show();
             }
         });
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(TEXT1_1 , text1.getText().toString());
+        editor.putString(TEXT1_2 , text2.getText().toString());
+        editor.putString(TEXT1_3 , text3.getText().toString());
+        editor.putString(TEXT1_4 , text4.getText().toString());
+        editor.putString(TEXT1_6 , text6.getText().toString());
+
+        editor.apply();
+    }
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
+        text1_1 = sharedPreferences.getString(TEXT1_1 , "English");
+        text1_2 = sharedPreferences.getString(TEXT1_2 , "OFF");
+        text1_3 = sharedPreferences.getString(TEXT1_3 , "OFF");
+        text1_4 = sharedPreferences.getString(TEXT1_4 , "UTC+05:00, Europe");
+        text1_6 = sharedPreferences.getString(TEXT1_6 , "AM/PM");
+    }
+
+    public void updateData() {
+        text1.setText(text1_1);
+        text2.setText(text1_2);
+        text3.setText(text1_3);
+        text4.setText(text1_4);
+        text6.setText(text1_6);
     }
 }

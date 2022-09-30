@@ -106,7 +106,7 @@ public class VedioActivity extends AppCompatActivity {
         cast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(VedioActivity.this, "Cast", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent("android.settings.CAST_SETTINGS"));
             }
         });
 

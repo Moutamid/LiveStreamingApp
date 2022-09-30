@@ -1,7 +1,10 @@
 package com.moutamid.livestreamingapp;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +34,7 @@ public class Adapter_Channel extends RecyclerView.Adapter<Adapter_Channel.Holder
     @Override
     public HolderAndroid onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Stash.init(context);
+
         View view = LayoutInflater.from(context).inflate(R.layout.row_channels, parent, false);
         return new HolderAndroid(view);
     }
@@ -65,9 +69,39 @@ public class Adapter_Channel extends RecyclerView.Adapter<Adapter_Channel.Holder
             }
         });
 
+        if (Stash.getBoolean(position+""))
+        holder.btn_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+        else holder.btn_fav.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+
         holder.btn_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (Stash.getBoolean(position+"")){
+                    // REMOVE FAVOURITE
+                    holder.btn_fav.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                    Stash.put(position+"", false);
+                }else {
+                    // SAVE FAVOURITE
+                    holder.btn_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+                    Stash.put(position+"", true);
+                }
+
+                /*if (modelAndroid.isFavourite()){
+                    // REMOVE  FAVOURITE
+
+                    modelAndroid.setFavourite(false);
+                    holder.btn_fav.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                    Stash.put();// YE LIST JAHAN SE RETREIVE HUI HE WAHAN E SAVE KRNI HE YAHAN
+
+                }else {
+                    // ADD FAVOURITE
+                    modelAndroid.setFavourite(true);
+                    holder.btn_fav.setImageResource(R.drawable.ic_baseline_favorite_24);
+                }*/
+
+                holder.btn_fav_done.setVisibility(View.VISIBLE);
+                holder.btn_fav.setVisibility(View.GONE);
                 ArrayList<Model_Channel> our_arraylist = Stash.getArrayList("name_of_arraylist" , Model_Channel.class);
                 our_arraylist.add(modelAndroid);
                 Stash.put("name_of_arraylist" , our_arraylist);
@@ -82,9 +116,9 @@ public class Adapter_Channel extends RecyclerView.Adapter<Adapter_Channel.Holder
     }
 
     class HolderAndroid extends RecyclerView.ViewHolder {
-
         private ImageView image1 ;
         private ImageView btn_fav ;
+        private ImageView btn_fav_done ;
         private TextView name , des , cast , time , link;
         private CardView card_channel;
 
@@ -93,6 +127,7 @@ public class Adapter_Channel extends RecyclerView.Adapter<Adapter_Channel.Holder
 
             image1 = itemView.findViewById(R.id.channel_img);
             btn_fav = itemView.findViewById(R.id.btn_fav);
+            btn_fav_done = itemView.findViewById(R.id.btn_fav_done);
             name = itemView.findViewById(R.id.title_channel);
             des = itemView.findViewById(R.id.description_channel);
             cast = itemView.findViewById(R.id.cast_channel);

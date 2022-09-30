@@ -67,7 +67,7 @@ public class Adapter_Fav extends RecyclerView.Adapter<Adapter_Fav.HolderAndroid>
         holder.btn_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<Model_Channel> our_arraylist = Stash.getArrayList("name_of_arraylist", Model_Channel.class);
+              /*  ArrayList<Model_Channel> our_arraylist = Stash.getArrayList("name_of_arraylist", Model_Channel.class);
 
                 for (int i=0 ; i<our_arraylist.size(); i++) {
                     if (our_arraylist.get(i).name.equals(modelAndroid.name)) {//Q K CURRENT MODEL YE H // AB SAVE KAHAN KAR RHY HO WO FILE OPEN KARO
@@ -78,7 +78,7 @@ public class Adapter_Fav extends RecyclerView.Adapter<Adapter_Fav.HolderAndroid>
 
                 androidArrayList.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
-                Toast.makeText(context, "Removed From Favorities", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Removed From Favorities", Toast.LENGTH_SHORT).show();*/
             }
         });
     }
