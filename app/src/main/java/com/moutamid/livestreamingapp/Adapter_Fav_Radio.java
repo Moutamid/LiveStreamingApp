@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.fxn.stash.Stash;
 
 import java.util.ArrayList;
@@ -42,11 +43,10 @@ public class Adapter_Fav_Radio extends RecyclerView.Adapter<Adapter_Fav_Radio.Ho
 
         String name_channel = modelAndroid.getName();
         String link_channel = modelAndroid.getLink();
-        int image_1 = modelAndroid.getImage1();
 
         holder.name2.setText(name_channel);
         holder.link2.setText(link_channel);
-        holder.image12.setImageResource(image_1);
+        Glide.with(context).load(androidArrayList.get(position).getImage1()).placeholder(R.drawable.logo).into(holder.image12);
 
         if (position % 2 == 0){
             holder.view_top2.setVisibility(View.VISIBLE);
@@ -71,7 +71,7 @@ public class Adapter_Fav_Radio extends RecyclerView.Adapter<Adapter_Fav_Radio.Ho
         holder.btn_fav22.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*ArrayList<Model_Radio> our_arraylist = Stash.getArrayList("name_of_radio", Model_Radio.class);
+                ArrayList<Model_Radio> our_arraylist = Stash.getArrayList("name_of_radio", Model_Radio.class);
 
                 for (int i=0 ; i<our_arraylist.size(); i++) {
                     if (our_arraylist.get(i).name.equals(modelAndroid.name)) {
@@ -82,7 +82,7 @@ public class Adapter_Fav_Radio extends RecyclerView.Adapter<Adapter_Fav_Radio.Ho
 
                 androidArrayList.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
-                Toast.makeText(context, "Removed From Favorities", Toast.LENGTH_SHORT).show();*/
+                Toast.makeText(context, "Removed From Favorities", Toast.LENGTH_SHORT).show();
             }
         });
 

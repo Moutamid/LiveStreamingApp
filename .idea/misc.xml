@@ -8,6 +8,8 @@
         <entry key="app/src/main/res/drawable/ic_baseline_brightness_7_24.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/ic_baseline_stop_24.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/activity_add_channel.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/layout/activity_add_radio.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/layout/activity_favorities.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_music.xml" value="0.19610507246376813" />

@@ -1,7 +1,5 @@
 package com.moutamid.livestreamingapp;
 
-import static android.content.Context.MODE_PRIVATE;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.fxn.stash.Stash;
 
 import java.util.ArrayList;
@@ -48,14 +47,13 @@ public class Adapter_Channel extends RecyclerView.Adapter<Adapter_Channel.Holder
         String cast_channel = modelAndroid.getCast();
         String time_channel = modelAndroid.getTime();
         String link_channel = modelAndroid.getLink();
-        int image_1 = modelAndroid.getImage1();
 
         holder.name.setText(name_channel);
         holder.des.setText(des_channel);
         holder.cast.setText(cast_channel);
         holder.time.setText(time_channel);
         holder.link.setText(link_channel);
-        holder.image1.setImageResource(image_1);
+        Glide.with(context).load(androidArrayList.get(position).getImage1()).placeholder(R.drawable.logo).into(holder.image1);
 
         holder.card_channel.setOnClickListener(new View.OnClickListener() {
             @Override

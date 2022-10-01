@@ -2,13 +2,13 @@ package com.moutamid.livestreamingapp;
 
 public class Model_Channel {
     String name , des , cast , time , link;
-    int image1 ;
+    String image1 ;
     boolean isFavourite = false;
 
     public Model_Channel() {
     }
 
-    public Model_Channel(String name, String des, String cast, String time, String link, int image1, boolean isFavourite) {
+    public Model_Channel(String name, String des, String cast, String time, String link, String image1, boolean isFavourite) {
         this.name = name;
         this.des = des;
         this.cast = cast;
@@ -58,11 +58,11 @@ public class Model_Channel {
         this.link = link;
     }
 
-    public int getImage1() {
+    public String getImage1() {
         return image1;
     }
 
-    public void setImage1(int image1) {
+    public void setImage1(String image1) {
         this.image1 = image1;
     }
 

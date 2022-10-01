@@ -1,104 +1,39 @@
 package com.moutamid.livestreamingapp;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class Radio_Fragment extends Fragment {
 
-    private String[] radio_name = {
-            "GEO NEW",
-            "HUM NEWS",
-            "ARY NEWS",
-            "PTV SPORTS",
-            "DISNEY",
-            "EXPRESS NEWS",
+    FloatingActionButton fab_channel;
 
-            "GEO NEW",
-            "HUM NEWS",
-            "ARY NEWS",
-            "PTV SPORTS",
-            "DISNEY",
-            "EXPRESS NEWS",
-
-            "GEO NEW",
-            "HUM NEWS",
-            "ARY NEWS",
-            "PTV SPORTS",
-            "DISNEY",
-            "EXPRESS NEWS",
-
-            "GEO NEW",
-            "HUM NEWS",
-    };
-
-    private String[] radio_link = {
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-            "https://radio-live-mg.rtr-vesti.ru/live/smil:r1.smil/variant.m3u8",
-    };
-
-    private int[] images1_radio = {
-            R.drawable.geo,
-            R.drawable.hum,
-            R.drawable.ary,
-            R.drawable.ptv,
-            R.drawable.disney,
-            R.drawable.express,
-
-            R.drawable.geo,
-            R.drawable.hum,
-            R.drawable.ary,
-            R.drawable.ptv,
-            R.drawable.disney,
-            R.drawable.express,
-
-            R.drawable.geo,
-            R.drawable.hum,
-            R.drawable.ary,
-            R.drawable.ptv,
-            R.drawable.disney,
-            R.drawable.express,
-
-            R.drawable.geo,
-            R.drawable.hum,
-    };
+    RecyclerView mOnline_Recycler;
+    ArrayList<Model_Radio> modelOnlines_list;
+    private DatabaseReference databaseReference;
+    ProgressDialog pd;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-
-    private RecyclerView radio_recycler;
-    private ArrayList<Model_Radio> model_radioArrayList;
-    private Adapter_Radio adapter_radio;
 
     public Radio_Fragment() {
     }
@@ -125,26 +60,53 @@ public class Radio_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_channel_, container, false);
-        radio_recycler = view.findViewById(R.id.recyclerView_channel);
-        radio_recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        View view = inflater.inflate(R.layout.fragment_radio_, container, false);
 
-        loadradio();
+        pd = new ProgressDialog(getContext());
+        pd.setTitle("Loading...");
+        pd.setMessage("Fetching data please wait or check your internet");
+        pd.setCanceledOnTouchOutside(true);
+        mOnline_Recycler = view.findViewById(R.id.recyclerView_radio);
+
+        fab_channel = view.findViewById(R.id.fab_channel2);
+        fab_channel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext() , Add_Radio.class);
+                startActivity(intent);
+            }
+        });
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext() , 2);
+        mOnline_Recycler.setLayoutManager(gridLayoutManager);
+
+        modelOnlines_list = new ArrayList<>();
+        Adapter_Radio adapter_online = new Adapter_Radio(getContext() , modelOnlines_list);
+        mOnline_Recycler.setAdapter(adapter_online);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Radio");
+        pd.show();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                modelOnlines_list.clear();
+
+                for (DataSnapshot itemSnapshot : snapshot.getChildren()) {
+                    Model_Radio modelOnline = itemSnapshot.getValue(Model_Radio.class);
+                    modelOnlines_list.add(modelOnline);
+                }
+                adapter_online.notifyDataSetChanged();
+                pd.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                pd.dismiss();
+            }
+        });
+
         return view;
-    }
-
-    private void loadradio() {
-        model_radioArrayList = new ArrayList<>();
-
-        for (int i = 0; i < radio_name.length; i++) {
-            Model_Radio modelAndroid = new Model_Radio(
-                    radio_name[i],
-                    radio_link[i],
-                    images1_radio[i]
-            );
-            model_radioArrayList.add(modelAndroid);
-        }
-        adapter_radio = new Adapter_Radio(getContext(), model_radioArrayList);
-        radio_recycler.setAdapter(adapter_radio);
     }
 }

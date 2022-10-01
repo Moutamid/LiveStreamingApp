@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class Fav_Channel extends Fragment {
 
     private RecyclerView fav_recycler;
-    private Adapter_Fav adapter_fav;
+    private Adapter_Fav_Channel adapter_favChannel;
     ArrayList<Model_Channel> our_arraylist;
 
     private static final String ARG_PARAM1 = "param1";
@@ -59,7 +59,7 @@ public class Fav_Channel extends Fragment {
     }
 
     private void loadFav() {
-        adapter_fav = new Adapter_Fav(getContext() , our_arraylist);
-        fav_recycler.setAdapter(adapter_fav);
+        adapter_favChannel = new Adapter_Fav_Channel(getContext() , our_arraylist);
+        fav_recycler.setAdapter(adapter_favChannel);
     }
 }

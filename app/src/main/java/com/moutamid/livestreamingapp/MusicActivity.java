@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -17,178 +18,90 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.webilisim.webplayer.WEBPlayer;
+import net.webilisim.webplayer.WEBPlayerStd;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class MusicActivity extends AppCompatActivity {
 
-    ImageView pause , play;
-    ImageView forward, backward;
-    MediaPlayer mediaPlayer;
+    WEBPlayerStd webPlayerStd;
+    TextView link , name ;
 
-    CardView card_seek;
-
-    SeekBar seekBar;
-    TextView playerPosition , playerDuration;
-
-    Handler handler = new Handler();
-    Runnable runnable;
-    String audioUrl;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
-        mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        try {
-            mediaPlayer.setDataSource(audioUrl);
-            mediaPlayer.prepare();
-            playAudio();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    ImageView dec_sound , inc_sound;
+    ImageView cast;
+    ImageView stop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
 
-        pause = findViewById(R.id.pause);
-        play = findViewById(R.id.play);
-        backward = findViewById(R.id.backward);
-        forward = findViewById(R.id.forward);
-        card_seek = findViewById(R.id.card_seek);
+        link = findViewById(R.id.link2);
+        name = findViewById(R.id.name2);
 
-        seekBar = findViewById(R.id.seek_bar);
-        playerPosition = findViewById(R.id.player_positiom);
-        playerDuration = findViewById(R.id.player_duration);
+        dec_sound = findViewById(R.id.dec_sound2);
+        inc_sound = findViewById(R.id.inc_sound2);
+        cast = findViewById(R.id.cast2);
+        stop = findViewById(R.id.stop2);
 
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                seekBar.setProgress(mediaPlayer.getCurrentPosition());
-                handler.postDelayed(this::run , 500);
-            }
-        };
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            link.setText(bundle.getString("link2"));
+            name.setText(bundle.getString("name2"));
+        }
 
+        String link_text = link.getText().toString().trim();
+        String name_text = name.getText().toString().trim();
 
-        forward.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mediaPlayer != null) {
-                    int currentPosition = mediaPlayer.getCurrentPosition();
-                    int seekForwardTime = 30 * 1000;
-                    if (currentPosition + seekForwardTime <= mediaPlayer.getDuration()) {
-                        mediaPlayer.seekTo(currentPosition + seekForwardTime);
-                    } else {
-                        mediaPlayer.seekTo(mediaPlayer.getDuration());
-                    }
-                }
-            }
-        });
+        webPlayerStd = findViewById(R.id.webplayer2);
+        webPlayerStd.setUp(link_text , name_text);
 
-        backward.setOnClickListener(new View.OnClickListener() {
+        AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+
+        dec_sound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mediaPlayer != null) {
-                    int currentPosition = mediaPlayer.getCurrentPosition();
-                    int seekBackwardTime = 30 * 1000;
-                    if (currentPosition - seekBackwardTime >= 0) {
-                        mediaPlayer.seekTo(currentPosition - seekBackwardTime);
-                    } else {
-                        mediaPlayer.seekTo(0);
-                    }
-                }
+                audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_PLAY_SOUND);
             }
         });
 
-        play.setOnClickListener(new View.OnClickListener() {
+        inc_sound.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                ConnectivityManager conMgr = (ConnectivityManager) getSystemService (Context.CONNECTIVITY_SERVICE);
-                // ARE WE CONNECTED TO THE NET
-                if (conMgr.getActiveNetworkInfo() != null
-                        && conMgr.getActiveNetworkInfo().isAvailable()
-                        && conMgr.getActiveNetworkInfo().isConnected()) {
-                    playAudio();
-                } else {
-
-                    Toast.makeText(MusicActivity.this, "Internet is not available...", Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View view) {
+                audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_PLAY_SOUND);
             }
         });
 
-        pause.setOnClickListener(new View.OnClickListener() {
+        cast.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    pause.setVisibility(View.GONE);
-                    play.setVisibility(View.VISIBLE);
-                    mediaPlayer.pause();
-                    handler.removeCallbacks(runnable);
-                } else {
-
-                }
+            public void onClick(View view) {
+                startActivity(new Intent("android.settings.CAST_SETTINGS"));
             }
         });
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        stop.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (b){
-                    mediaPlayer.seekTo(i);
-                }
-                playerPosition.setText(convertFormat(mediaPlayer.getCurrentPosition()));
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
+            public void onClick(View view) {
+                Intent intent = new Intent(MusicActivity.this , MainActivity.class);
+                startActivity(intent);
+                Toast.makeText(MusicActivity.this, "Stop", Toast.LENGTH_SHORT).show();
             }
         });
 
-    }
-
-    @Override
-    protected void onPause() {
-        mediaPlayer.stop();
-        super.onPause();
     }
 
     @Override
     public void onBackPressed() {
-        mediaPlayer.stop();
+        if (WEBPlayer.backPress()) {
+            return;
+        }
         super.onBackPressed();
     }
-
     @Override
-    protected void onDestroy() {
-        mediaPlayer.stop();
-        super.onDestroy();
-    }
-
-    @SuppressLint("DefaultLocale")
-    private String convertFormat(int duration) {
-        return String.format("%02d:%02d",
-                TimeUnit.MILLISECONDS.toMinutes(duration),
-                TimeUnit.MILLISECONDS.toSeconds(duration) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration)));
-    }
-
-    private void playAudio() {
-        pause.setVisibility(View.VISIBLE);
-        play.setVisibility(View.GONE);
-        mediaPlayer.start();
-        mediaPlayer.seekTo(mediaPlayer.getCurrentPosition());
-        seekBar.setMax(mediaPlayer.getDuration());
-        handler.postDelayed(runnable , 0);
-        playerDuration.setText(convertFormat(mediaPlayer.getDuration()));
+    protected void onPause() {
+        super.onPause();
+        WEBPlayer.releaseAllVideos();
     }
 }
