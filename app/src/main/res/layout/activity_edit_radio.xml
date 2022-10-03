@@ -5,22 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appClr"
-    tools:context=".Add_Channel">
+    tools:context=".Edit_Radio">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple_700"
-        app:title="Add Channel"
+        app:title="Edit Radio Items"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
+        android:layout_below="@+id/toolbar"
         android:layout_marginRight="20dp">
 
         <LinearLayout
@@ -29,19 +29,20 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/channel_id"
+                android:id="@+id/radio_id2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/shape_appclr2"
-                android:hint="Channel Number"
+                android:hint="Radio Number"
                 android:padding="10dp"
+                android:enabled="false"
                 android:textColor="@color/white"
                 android:textColorHint="#878787"
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/channel_name"
+                android:id="@+id/radio_name2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -53,44 +54,7 @@
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/channel_des"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/shape_appclr2"
-                android:hint="Description"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="#878787"
-                android:textSize="20dp" />
-
-            <EditText
-                android:id="@+id/channel_cast"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/shape_appclr2"
-                android:hint="Cast"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="#878787"
-                android:textSize="20dp" />
-
-            <EditText
-                android:id="@+id/channel_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/shape_appclr2"
-                android:hint="Time"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="#878787"
-                android:textSize="20dp" />
-
-
-            <EditText
-                android:id="@+id/channel_link"
+                android:id="@+id/radio_link2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -108,7 +72,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/channel_img_add"
+                    android:id="@+id/radio_img_add2"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
                     android:layout_gravity="center"
@@ -118,12 +82,13 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/channel_btn_add"
+                android:id="@+id/radio_btn_add2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Submit All Data" />
         </LinearLayout>
 
     </ScrollView>
+
 
 </RelativeLayout>

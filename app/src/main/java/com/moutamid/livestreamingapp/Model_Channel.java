@@ -1,19 +1,20 @@
 package com.moutamid.livestreamingapp;
 
 public class Model_Channel {
-    String name , des , cast , time , link;
+    String name , des , cast , time , link , id;
     String image1 ;
     boolean isFavourite = false;
 
     public Model_Channel() {
     }
 
-    public Model_Channel(String name, String des, String cast, String time, String link, String image1, boolean isFavourite) {
+    public Model_Channel(String name, String des, String cast, String time, String link, String id, String image1, boolean isFavourite) {
         this.name = name;
         this.des = des;
         this.cast = cast;
         this.time = time;
         this.link = link;
+        this.id = id;
         this.image1 = image1;
         this.isFavourite = isFavourite;
     }
@@ -58,6 +59,14 @@ public class Model_Channel {
         this.link = link;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getImage1() {
         return image1;
     }
@@ -71,6 +80,6 @@ public class Model_Channel {
     }
 
     public void setFavourite(boolean favourite) {
-        isFavourite = favourite;//THANKS :)
+        isFavourite = favourite;
     }
 }

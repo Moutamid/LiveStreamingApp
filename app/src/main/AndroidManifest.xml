@@ -18,6 +18,18 @@
         android:theme="@style/Theme.LiveStreamingApp"
         tools:targetApi="31">
         <activity
+            android:name=".Edit_Radio"
+            android:exported="false" />
+        <activity
+            android:name=".Edit_Channel"
+            android:exported="false" />
+        <activity
+            android:name=".Radio_List"
+            android:exported="false" />
+        <activity
+            android:name=".Channel_List"
+            android:exported="false" />
+        <activity
             android:name=".Add_Radio"
             android:exported="false" />
         <activity

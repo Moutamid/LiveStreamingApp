@@ -7,10 +7,19 @@
     android:background="@color/appClr"
     tools:context=".Add_Radio">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        app:title="Add Radio"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
+        android:layout_below="@+id/toolbar"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp">
 
@@ -25,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/shape_appclr2"
-                android:hint="Channel Number"
+                android:hint="Radio Number"
                 android:padding="10dp"
                 android:textColor="@color/white"
                 android:textColorHint="#878787"

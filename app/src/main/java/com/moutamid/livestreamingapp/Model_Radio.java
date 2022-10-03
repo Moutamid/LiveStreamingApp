@@ -1,16 +1,17 @@
 package com.moutamid.livestreamingapp;
 
 public class Model_Radio {
-    String name , link;
+    String name , link , id;
     String image1 ;
     boolean isFavourite = false;
 
     public Model_Radio() {
     }
 
-    public Model_Radio(String name, String link, String image1, boolean isFavourite) {
+    public Model_Radio(String name, String link, String id, String image1, boolean isFavourite) {
         this.name = name;
         this.link = link;
+        this.id = id;
         this.image1 = image1;
         this.isFavourite = isFavourite;
     }
@@ -29,6 +30,14 @@ public class Model_Radio {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getImage1() {

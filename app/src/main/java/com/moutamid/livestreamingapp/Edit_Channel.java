@@ -26,44 +26,52 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
-public class Add_Channel extends AppCompatActivity {
+public class Edit_Channel extends AppCompatActivity {
 
     EditText channel_name , channel_des , channel_cast , channel_time , channel_link ,channel_id;
-    Button channel_btn_add;
-    ImageView channel_img;
+    Button channel_btn_add2;
+    ImageView channel_img_add2;
 
     private static final int IMAGE_REQUEST = 1;
     Uri uri;
     ProgressDialog pd;
     String imageURL;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_channel);
+        setContentView(R.layout.activity_edit_channel);
 
         pd = new ProgressDialog(this);
         pd.setTitle("Wait...");
         pd.setMessage("Test Uploading...");
 
-        channel_name = findViewById(R.id.channel_name);
-        channel_id = findViewById(R.id.channel_id);
-        channel_des = findViewById(R.id.channel_des);
-        channel_cast = findViewById(R.id.channel_cast);
-        channel_time = findViewById(R.id.channel_time);
-        channel_link = findViewById(R.id.channel_link);
-        channel_img = findViewById(R.id.channel_img_add);
-        channel_btn_add = findViewById(R.id.channel_btn_add);
+        channel_name = findViewById(R.id.channel_name2);
+        channel_id = findViewById(R.id.channel_id2);
+        channel_des = findViewById(R.id.channel_des2);
+        channel_cast = findViewById(R.id.channel_cast2);
+        channel_time = findViewById(R.id.channel_time2);
+        channel_link = findViewById(R.id.channel_link2);
+        channel_btn_add2 = findViewById(R.id.channel_btn_add2);
+        channel_img_add2 = findViewById(R.id.channel_img_add2);
 
-        channel_img.setOnClickListener(new View.OnClickListener() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            channel_name.setText(bundle.getString("name"));
+            channel_link.setText(bundle.getString("link"));
+            channel_des.setText(bundle.getString("des"));
+            channel_cast.setText(bundle.getString("cast"));
+            channel_time.setText(bundle.getString("time"));
+            channel_id.setText(bundle.getString("id"));
+        }
+
+        channel_img_add2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openImage();
             }
         });
 
-        // 3rd btn for submit all data using firebase
-        channel_btn_add.setOnClickListener(new View.OnClickListener() {
+        channel_btn_add2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -75,28 +83,29 @@ public class Add_Channel extends AppCompatActivity {
                 String link = channel_link.getText().toString().trim();
 
                 if (id.isEmpty()){
-                    Toast.makeText(Add_Channel.this, "Enter Unique Channel ID", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Channel.this, "Enter Unique Channel ID", Toast.LENGTH_SHORT).show();
                 }
                 else if (name.isEmpty()){
-                    Toast.makeText(Add_Channel.this, "Enter Channel Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Channel.this, "Enter Channel Name", Toast.LENGTH_SHORT).show();
                 }
                 else if (des.isEmpty()){
-                    Toast.makeText(Add_Channel.this, "Enter Channel Description", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Channel.this, "Enter Channel Description", Toast.LENGTH_SHORT).show();
                 }
                 else if (cast.isEmpty()){
-                    Toast.makeText(Add_Channel.this, "Enter Channel Cast", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Channel.this, "Enter Channel Cast", Toast.LENGTH_SHORT).show();
                 }
                 else if (time.isEmpty()){
-                    Toast.makeText(Add_Channel.this, "Enter Channel Time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Channel.this, "Enter Channel Time", Toast.LENGTH_SHORT).show();
                 }
                 else if (link.isEmpty()){
-                    Toast.makeText(Add_Channel.this, "Enter Channel Link", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Channel.this, "Enter Channel Link", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     uploadImage();
                 }
             }
         });
+
     }
 
     private void openImage() {
@@ -112,7 +121,7 @@ public class Add_Channel extends AppCompatActivity {
 
         if (resultCode == RESULT_OK){
             uri = data.getData();
-            channel_img.setImageURI(uri);
+            channel_img_add2.setImageURI(uri);
         }
         else {
             Toast.makeText(this, "No Image is Selected", Toast.LENGTH_SHORT).show();
@@ -129,12 +138,13 @@ public class Add_Channel extends AppCompatActivity {
                 while (!uriTask.isComplete());
                 Uri uriImage = uriTask.getResult();
                 imageURL = uriImage.toString();
-                uploadTest();
+                uploadData();
             }
         });
     }
 
-    private void uploadTest(){
+
+    private void uploadData() {
         pd.show();
         String check = channel_id.getText().toString().trim();
 
@@ -160,14 +170,14 @@ public class Add_Channel extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     pd.dismiss();
-                    Toast.makeText(Add_Channel.this, "Test Uploaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Channel.this, "Test Uploaded", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Add_Channel.this, "Failed to Upload..." , Toast.LENGTH_SHORT).show();
+                Toast.makeText(Edit_Channel.this, "Failed to Upload..." , Toast.LENGTH_SHORT).show();
                 pd.dismiss();
             }
         });

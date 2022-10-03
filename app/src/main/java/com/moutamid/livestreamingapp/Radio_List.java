@@ -1,16 +1,14 @@
 package com.moutamid.livestreamingapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class Radio_Fragment extends Fragment {
+public class Radio_List extends AppCompatActivity {
 
     FloatingActionButton fab_channel;
 
@@ -30,58 +28,31 @@ public class Radio_Fragment extends Fragment {
     private DatabaseReference databaseReference;
     ProgressDialog pd;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
-
-    public Radio_Fragment() {
-    }
-
-    public static Radio_Fragment newInstance(String param1, String param2) {
-        Radio_Fragment fragment = new Radio_Fragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+        setContentView(R.layout.activity_radio_list);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_radio_, container, false);
-
-        pd = new ProgressDialog(getContext());
+        pd = new ProgressDialog(this);
         pd.setTitle("Loading...");
         pd.setMessage("Fetching data please wait or check your internet");
         pd.setCanceledOnTouchOutside(true);
-        mOnline_Recycler = view.findViewById(R.id.recyclerView_radio);
+        mOnline_Recycler = findViewById(R.id.recyclerView_radio);
 
-        fab_channel = view.findViewById(R.id.fab_channel2);
+        fab_channel = findViewById(R.id.fab_radio2);
         fab_channel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext() , Radio_List.class);
+                Intent intent = new Intent(Radio_List.this , Add_Radio.class);
                 startActivity(intent);
             }
         });
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext() , 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(Radio_List.this , 2);
         mOnline_Recycler.setLayoutManager(gridLayoutManager);
 
         modelOnlines_list = new ArrayList<>();
-        Adapter_Radio adapter_online = new Adapter_Radio(getContext() , modelOnlines_list);
+        Adapter_List_Radio adapter_online = new Adapter_List_Radio(Radio_List.this , modelOnlines_list);
         mOnline_Recycler.setAdapter(adapter_online);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Radio");
@@ -106,7 +77,5 @@ public class Radio_Fragment extends Fragment {
                 pd.dismiss();
             }
         });
-
-        return view;
     }
 }

@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,7 +27,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 
-public class Add_Radio extends AppCompatActivity {
+public class Edit_Radio extends AppCompatActivity {
 
     EditText radio_name , radio_link ,radio_id;
     Button radio_btn_add;
@@ -40,17 +41,24 @@ public class Add_Radio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_radio);
+        setContentView(R.layout.activity_edit_radio);
 
         pd = new ProgressDialog(this);
         pd.setTitle("Wait...");
         pd.setMessage("Test Uploading...");
 
-        radio_name = findViewById(R.id.radio_name);
-        radio_id = findViewById(R.id.radio_id);
-        radio_link = findViewById(R.id.radio_link);
-        raido_img = findViewById(R.id.radio_img_add);
-        radio_btn_add = findViewById(R.id.radio_btn_add);
+        radio_name = findViewById(R.id.radio_name2);
+        radio_id = findViewById(R.id.radio_id2);
+        radio_link = findViewById(R.id.radio_link2);
+        raido_img = findViewById(R.id.radio_img_add2);
+        radio_btn_add = findViewById(R.id.radio_btn_add2);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            radio_name.setText(bundle.getString("name"));
+            radio_link.setText(bundle.getString("link"));
+            radio_id.setText(bundle.getString("id"));
+        }
 
         raido_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,13 +77,13 @@ public class Add_Radio extends AppCompatActivity {
                 String link = radio_link.getText().toString().trim();
 
                 if (id.isEmpty()){
-                    Toast.makeText(Add_Radio.this, "Enter Unique Radio ID", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Radio.this, "Enter Unique Radio ID", Toast.LENGTH_SHORT).show();
                 }
                 else if (name.isEmpty()){
-                    Toast.makeText(Add_Radio.this, "Enter Radio Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Radio.this, "Enter Radio Name", Toast.LENGTH_SHORT).show();
                 }
                 else if (link.isEmpty()){
-                    Toast.makeText(Add_Radio.this, "Enter Radio Link", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Radio.this, "Enter Radio Link", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     uploadImage();
@@ -139,14 +147,14 @@ public class Add_Radio extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     pd.dismiss();
-                    Toast.makeText(Add_Radio.this, "Test Uploaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Edit_Radio.this, "Test Uploaded", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Add_Radio.this, "Failed to Upload..." , Toast.LENGTH_SHORT).show();
+                Toast.makeText(Edit_Radio.this, "Failed to Upload..." , Toast.LENGTH_SHORT).show();
                 pd.dismiss();
             }
         });

@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/appClr"
-    tools:context=".Radio_Fragment">
+    tools:context=".Channel_List">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_700"
+        app:title="Manage Channel Items"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
         android:layout_height="match_parent">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/fab_channel2"
+            android:id="@+id/fab_channel_list"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:visibility="visible"
             android:layout_margin="20sp"
             android:tintMode="@color/white"
-            android:src="@drawable/ic_baseline_create_24"/>
+            android:visibility="visible"
+            android:src="@drawable/ic_baseline_add_24"/>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -34,14 +43,13 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView_radio"
+                    android:id="@+id/recyclerView_channel_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:listitem="@layout/row_radio"
+                    tools:listitem="@layout/row_channel_list"
                     android:orientation="vertical"
-                    app:spanCount="2"
                     android:nestedScrollingEnabled="false"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:scrollbars="vertical" />
 
             </LinearLayout>
@@ -49,4 +57,5 @@
 
     </RelativeLayout>
 
-</FrameLayout>
+
+</RelativeLayout>
