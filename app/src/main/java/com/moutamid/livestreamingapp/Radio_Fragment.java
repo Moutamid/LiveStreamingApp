@@ -1,11 +1,19 @@
 package com.moutamid.livestreamingapp;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.moutamid.livestreamingapp.Settings_Activity.SHARED_PREFS;
+import static com.moutamid.livestreamingapp.Settings_Activity.TEXT1_1;
+
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,6 +37,13 @@ public class Radio_Fragment extends Fragment {
     ArrayList<Model_Radio> modelOnlines_list;
     private DatabaseReference databaseReference;
     ProgressDialog pd;
+
+    TextView title_main;
+    TextView title_lang;
+
+    Context context;
+    Resources resources;
+    private String text1_1;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -67,6 +82,8 @@ public class Radio_Fragment extends Fragment {
         pd.setMessage("Fetching data please wait or check your internet");
         pd.setCanceledOnTouchOutside(true);
         mOnline_Recycler = view.findViewById(R.id.recyclerView_radio);
+        title_main = view.findViewById(R.id.title_main);
+        title_lang = view.findViewById(R.id.title_lang);
 
         fab_channel = view.findViewById(R.id.fab_channel2);
         fab_channel.setOnClickListener(new View.OnClickListener() {
@@ -108,5 +125,58 @@ public class Radio_Fragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        loadData();
+        String lang = title_lang.getText().toString().trim();
+        if (lang.equals("English")){
+            context = LocaleHelper.setLocale(getContext(), "en");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.live_radio));
+        }
+        if (lang.equals("French")){
+            context = LocaleHelper.setLocale(getContext(), "fr");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.live_radio));
+        }
+        if (lang.equals("German")){
+            context = LocaleHelper.setLocale(getContext(), "de");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.live_radio));
+        }
+        if (lang.equals("Arabic")){
+            context = LocaleHelper.setLocale(getContext(), "ar");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.live_radio));
+        }
+        if (lang.equals("Turkish")){
+            context = LocaleHelper.setLocale(getContext(), "tr");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.live_radio));
+        }
+        if (lang.equals("Russian")){
+            context = LocaleHelper.setLocale(getContext(), "ru");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.live_radio));
+        }
+        if (lang.equals("Spanish")){
+            context = LocaleHelper.setLocale(getContext(), "es");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.live_radio));
+        }
+        if (lang.equals("Urdu")){
+            context = LocaleHelper.setLocale(getContext(), "ur");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.live_radio));
+        }
+        super.onStart();
+    }
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
+        text1_1 = sharedPreferences.getString(TEXT1_1 , "English");
+        title_lang.setText(text1_1);
     }
 }

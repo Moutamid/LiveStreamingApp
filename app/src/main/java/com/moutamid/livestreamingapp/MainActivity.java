@@ -2,10 +2,17 @@ package com.moutamid.livestreamingapp;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
+import static com.moutamid.livestreamingapp.Settings_Activity.SHARED_PREFS;
+import static com.moutamid.livestreamingapp.Settings_Activity.TEXT1_1;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +39,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Channel_Fragment channel_fragment;
     private Radio_Fragment radio_fragment;
 
+    TextView title_main;
+    TextView title_lang;
+
+    Context context;
+    Resources resources;
+    private String text1_1;
+
+    @Override
+    protected void onStart() {
+        loadData();
+        String lang = title_lang.getText().toString().trim();
+        if (lang.equals("English")){
+            context = LocaleHelper.setLocale(MainActivity.this, "en");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.france_tv_radio));
+        }
+        if (lang.equals("French")){
+            context = LocaleHelper.setLocale(MainActivity.this, "fr");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.france_tv_radio));
+        }
+        if (lang.equals("German")){
+            context = LocaleHelper.setLocale(MainActivity.this, "de");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.france_tv_radio));
+        }
+        if (lang.equals("Arabic")){
+            context = LocaleHelper.setLocale(MainActivity.this, "ar");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.france_tv_radio));
+        }
+        if (lang.equals("Turkish")){
+            context = LocaleHelper.setLocale(MainActivity.this, "tr");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.france_tv_radio));
+        }
+        if (lang.equals("Russian")){
+            context = LocaleHelper.setLocale(MainActivity.this, "ru");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.france_tv_radio));
+        }
+        if (lang.equals("Spanish")){
+            context = LocaleHelper.setLocale(MainActivity.this, "es");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.france_tv_radio));
+        }
+        if (lang.equals("Urdu")){
+            context = LocaleHelper.setLocale(MainActivity.this, "ur");
+            resources = context.getResources();
+            title_main.setText(resources.getString(R.string.france_tv_radio));
+        }
+
+        super.onStart();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        title_main = findViewById(R.id.title_main);
+        title_lang = findViewById(R.id.title_lang);
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -135,5 +200,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=$packageName")));
         }
         return false;
+    }
+
+    public void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS , MODE_PRIVATE);
+        text1_1 = sharedPreferences.getString(TEXT1_1 , "English");
+        title_lang.setText(text1_1);
     }
 }

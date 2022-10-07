@@ -10,9 +10,31 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="Live Stream"
+        app:title=" "
         android:background="@android:color/transparent"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+    <TextView
+        android:id="@+id/title_lang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Language"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/title_main"
+        android:layout_below="@+id/title_lang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="France TV and Radio"
+        android:textColor="@color/green"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textSize="20sp"/>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -44,8 +66,7 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp" />
+            android:layout_alignParentTop="true" />
     </RelativeLayout>
 
 </RelativeLayout>
