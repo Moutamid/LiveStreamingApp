@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else
         if(id==R.id.item6){
-            startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:to@gmail.com")));
+            startActivity(new Intent(Intent.ACTION_SENDTO, Uri.parse("alfidasaldana@gmail.com")));
         }
         else
         if(id==R.id.item7){
