@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         else
         if(id==R.id.item5){
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com"));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://apps.apploadyou.net/application/privacypolicy?id=63457cdeb50c7"));
             startActivity(browserIntent);
         }
         else
