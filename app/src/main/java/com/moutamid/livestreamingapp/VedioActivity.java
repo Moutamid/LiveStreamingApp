@@ -31,7 +31,7 @@ public class VedioActivity extends AppCompatActivity {
 
     ImageView dec_brightness , inc_brightness;
     ImageView dec_sound , inc_sound;
-    ImageView cast;
+    ImageView cast, startBtn;
     ImageView stop;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -48,6 +48,7 @@ public class VedioActivity extends AppCompatActivity {
         dec_sound = findViewById(R.id.dec_sound);
         inc_sound = findViewById(R.id.inc_sound);
         cast = findViewById(R.id.cast);
+        startBtn = findViewById(R.id.startBtn);
         stop = findViewById(R.id.stop);
 
         Bundle bundle = getIntent().getExtras();
@@ -59,6 +60,13 @@ public class VedioActivity extends AppCompatActivity {
 
         String link_text = link.getText().toString().trim();
         String name_text = name.getText().toString().trim();
+
+        startBtn.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setDataAndType(Uri.parse(link_text),"video/*");
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(Intent.createChooser(i, "Choose Your Player"));
+        });
 
         webPlayerStd = findViewById(R.id.webplayer);
         layout_options = findViewById(R.id.layout_buttons);
