@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
+        int id = item.getItemId();;
 
         if(id==R.id.item1){
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com"));
